@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom';
 // material
 import { experimentalStyled as styled } from '@material-ui/core/styles';
 //
+import { useSelector } from '../../redux/store';
 import DashboardNavbar from './DashboardNavbar';
 import DashboardSidebar from './DashboardSidebar';
 
@@ -34,11 +35,16 @@ const MainStyle = styled('div')(({ theme }) => ({
 
 export default function DashboardLayout() {
   const [open, setOpen] = useState(false);
+  const isProfileCompleted = useSelector((state) => state.profile.isProfileCompleted);
 
   return (
     <RootStyle>
       <DashboardNavbar onOpenSidebar={() => setOpen(true)} />
-      <DashboardSidebar isOpenSidebar={open} onCloseSidebar={() => setOpen(false)} />
+      <DashboardSidebar
+        isOpenSidebar={open}
+        onCloseSidebar={() => setOpen(false)}
+        isProfileCompleted={isProfileCompleted}
+      />
       <MainStyle>
         <Outlet />
       </MainStyle>

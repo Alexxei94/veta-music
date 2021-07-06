@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 // utils
 import axios from '../utils/axios';
 import { isValidToken, setSession } from '../utils/jwt';
+import { useDispatch } from '../redux/store';
+import { getUserProfile } from '../redux/slices/profile';
+import { setUser } from '../redux/slices/auth';
 
 // ----------------------------------------------------------------------
 
@@ -63,6 +66,7 @@ AuthProvider.propTypes = {
 
 function AuthProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const storeDispatch = useDispatch();
 
   useEffect(() => {
     const initialize = async () => {
@@ -89,6 +93,8 @@ function AuthProvider({ children }) {
               user
             }
           });
+          storeDispatch(setUser(user));
+          storeDispatch(getUserProfile(user.email));
         } else {
           dispatch({
             type: 'INITIALIZE',

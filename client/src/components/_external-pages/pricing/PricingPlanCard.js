@@ -32,7 +32,7 @@ PricingPlanCard.propTypes = {
   card: PropTypes.object
 };
 
-export default function PricingPlanCard({ card, index }) {
+export default function PricingPlanCard({ card, index, onSelectPlan }) {
   const { subscription, icon, price, caption, lists, labelAction } = card;
 
   return (
@@ -57,7 +57,7 @@ export default function PricingPlanCard({ card, index }) {
       <Box sx={{ display: 'flex', justifyContent: 'flex-end', my: 2 }}>
         {index === 1 || index === 2 ? (
           <Typography variant="subtitle1" sx={{ color: 'text.secondary' }}>
-            $
+            €
           </Typography>
         ) : (
           ''
@@ -75,7 +75,7 @@ export default function PricingPlanCard({ card, index }) {
               color: 'text.secondary'
             }}
           >
-            /mo
+            /year
           </Typography>
         ) : (
           ''
@@ -111,12 +111,14 @@ export default function PricingPlanCard({ card, index }) {
       </Stack>
 
       <Button
-        to={PATH_DASHBOARD.root}
+        // to={PATH_DASHBOARD.root}
         fullWidth
         size="large"
         variant="contained"
-        disabled={index === 0}
-        component={RouterLink}
+        // disabled={index === 0}
+        // component={RouterLink}
+        type="button"
+        onClick={() => onSelectPlan(subscription)}
       >
         {labelAction}
       </Button>

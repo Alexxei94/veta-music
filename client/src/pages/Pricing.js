@@ -1,58 +1,19 @@
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 // material
 import { experimentalStyled as styled } from '@material-ui/core/styles';
 import { Box, Grid, Switch, Container, Typography } from '@material-ui/core';
 // components
 import Page from '../components/Page';
 import { PricingPlanCard } from '../components/_external-pages/pricing';
+// hooks
+import useAuth from '../hooks/useAuth';
 //
-import { PlanFreeIcon, PlanStarterIcon, PlanPremiumIcon } from '../assets';
-
+import { useDispatch } from '../redux/store';
+import { createNewProfile } from '../redux/slices/profile';
+import { PLANS } from './plans';
+import { PATH_DASHBOARD } from '../routes/paths';
 // ----------------------------------------------------------------------
-
-const PLANS = [
-  {
-    subscription: 'basic',
-    icon: <PlanFreeIcon />,
-    price: 0,
-    caption: 'forever',
-    lists: [
-      { text: '3 prototypes', isAvailable: true },
-      { text: '3 boards', isAvailable: true },
-      { text: 'Up to 5 team members', isAvailable: false },
-      { text: 'Advanced security', isAvailable: false },
-      { text: 'Permissions & workflows', isAvailable: false }
-    ],
-    labelAction: 'current plan'
-  },
-  {
-    subscription: 'starter',
-    icon: <PlanStarterIcon />,
-    price: 4.99,
-    caption: 'saving $24 a year',
-    lists: [
-      { text: '3 prototypes', isAvailable: true },
-      { text: '3 boards', isAvailable: true },
-      { text: 'Up to 5 team members', isAvailable: true },
-      { text: 'Advanced security', isAvailable: false },
-      { text: 'Permissions & workflows', isAvailable: false }
-    ],
-    labelAction: 'choose starter'
-  },
-  {
-    subscription: 'premium',
-    icon: <PlanPremiumIcon />,
-    price: 9.99,
-    caption: 'saving $124 a year',
-    lists: [
-      { text: '3 prototypes', isAvailable: true },
-      { text: '3 boards', isAvailable: true },
-      { text: 'Up to 5 team members', isAvailable: true },
-      { text: 'Advanced security', isAvailable: true },
-      { text: 'Permissions & workflows', isAvailable: true }
-    ],
-    labelAction: 'choose premium'
-  }
-];
 
 const RootStyle = styled(Page)(({ theme }) => ({
   minHeight: '100%',
@@ -63,6 +24,35 @@ const RootStyle = styled(Page)(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function Pricing() {
+  const [plansToShow, setPlansToShow] = useState(PLANS.artistPLans);
+
+  const { user } = useAuth();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const userData = JSON.parse(window.localStorage.getItem('userProfile'));
+
+  useEffect(() => {
+    if (userData) {
+      if (userData.accountType === 'label-distributor') setPlansToShow(PLANS.labelPlans);
+    }
+  }, []);
+
+  function onSelectPlan(subscription) {
+    const profileData = {
+      email: user.email,
+      fullName: userData?.fullName,
+      accountType: userData?.accountType,
+      profileType: userData?.profileType,
+      phoneNumber: userData?.phoneNumber,
+      cityName: userData?.cityName,
+      artistName: userData?.artistName,
+      pricingPlan: subscription,
+      referance: userData?.referance
+    };
+    dispatch(createNewProfile(profileData)).then(navigate(PATH_DASHBOARD.root));
+  }
+
   return (
     <RootStyle title="Pricing | Minimal-UI">
       <Container maxWidth="lg">
@@ -96,9 +86,9 @@ export default function Pricing() {
         </Box>
 
         <Grid container spacing={3}>
-          {PLANS.map((card, index) => (
-            <Grid item xs={12} md={4} key={card.subscription}>
-              <PricingPlanCard card={card} index={index} />
+          {plansToShow.map((card, index) => (
+            <Grid item xs={12} md={6} key={card.subscription}>
+              <PricingPlanCard card={card} index={index} onSelectPlan={onSelectPlan} />
             </Grid>
           ))}
         </Grid>

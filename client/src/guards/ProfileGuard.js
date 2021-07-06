@@ -8,15 +8,17 @@ import { PATH_DASHBOARD } from '../routes/paths';
 
 // ----------------------------------------------------------------------
 
-GuestGuard.propTypes = {
+ProfileGuard.propTypes = {
   children: PropTypes.node
 };
 
-export default function GuestGuard({ children }) {
+export default function ProfileGuard({ children }) {
   const { isAuthenticated } = useAuth();
 
-  if (isAuthenticated) {
-    return <Navigate to={PATH_DASHBOARD.root} />;
+  const isProfileCompleted = useSelector((state) => state.profile.isProfileCompleted);
+
+  if (isAuthenticated && !isProfileCompleted) {
+    return <Navigate to={PATH_DASHBOARD.user.profile} />;
   }
 
   return <>{children}</>;

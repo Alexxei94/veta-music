@@ -4,13 +4,13 @@ import { Container, Alert, AlertTitle } from '@material-ui/core';
 // ----------------------------------------------------------------------
 
 RoleBasedGuard.propTypes = {
-  accessibleRoles: PropTypes.array, // Example ['admin', 'leader']
+  accessibleRoles: PropTypes.array, // Example ['admin', 'leader', 'incomplete]
   children: PropTypes.node
 };
 
 const useCurrentRole = () => {
   // Logic here to get current user role
-  const role = 'admin';
+  const role = 'incomplete';
   return role;
 };
 

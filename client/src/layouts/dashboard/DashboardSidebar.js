@@ -51,7 +51,7 @@ DashboardSidebar.propTypes = {
   onCloseSidebar: PropTypes.func
 };
 
-export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
+export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar, isProfileCompleted }) {
   const { pathname } = useLocation();
   const { user } = useAuth();
 
@@ -88,7 +88,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
         </Link>
       </Box>
 
-      <NavSection navConfig={sidebarConfig} />
+      <NavSection navConfig={sidebarConfig(isProfileCompleted)} />
 
       <Box sx={{ flexGrow: 1 }} />
 

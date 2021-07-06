@@ -8,6 +8,7 @@ import LogoOnlyLayout from '../layouts/LogoOnlyLayout';
 // guards
 import GuestGuard from '../guards/GuestGuard';
 import AuthGuard from '../guards/AuthGuard';
+import ProfileGuard from '../guards/ProfileGuard';
 // import RoleBasedGuard from '../guards/RoleBasedGuard';
 // components
 import LoadingScreen from '../components/LoadingScreen';
@@ -77,8 +78,18 @@ export default function Router() {
         </AuthGuard>
       ),
       children: [
-        { path: '/', element: <Navigate to="/dashboard/app" replace /> },
-        { path: 'app', element: <GeneralApp /> },
+        {
+          path: '/',
+          element: <Navigate to="/dashboard/app" replace />
+        },
+        {
+          path: 'app',
+          element: (
+            <ProfileGuard>
+              <GeneralApp />
+            </ProfileGuard>
+          )
+        },
         { path: 'ecommerce', element: <GeneralEcommerce /> },
         {
           path: 'analytics',
@@ -101,7 +112,10 @@ export default function Router() {
           path: 'user',
           children: [
             { path: '/', element: <Navigate to="/dashboard/user/profile" replace /> },
-            { path: 'profile', element: <UserProfile /> },
+            {
+              path: 'profile',
+              element: <UserProfileSetup />
+            },
             { path: 'cards', element: <UserCards /> },
             { path: 'list', element: <UserList /> },
             { path: 'new', element: <UserCreate /> },
@@ -253,6 +267,7 @@ const BlogPosts = Loadable(lazy(() => import('../pages/dashboard/BlogPosts')));
 const BlogPost = Loadable(lazy(() => import('../pages/dashboard/BlogPost')));
 const BlogNewPost = Loadable(lazy(() => import('../pages/dashboard/BlogNewPost')));
 const UserProfile = Loadable(lazy(() => import('../pages/dashboard/UserProfile')));
+const UserProfileSetup = Loadable(lazy(() => import('../pages/dashboard/UserProfileSetup')));
 const UserCards = Loadable(lazy(() => import('../pages/dashboard/UserCards')));
 const UserList = Loadable(lazy(() => import('../pages/dashboard/UserList')));
 const UserAccount = Loadable(lazy(() => import('../pages/dashboard/UserAccount')));

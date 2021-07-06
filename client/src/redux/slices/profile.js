@@ -6,25 +6,27 @@ import axios from '../../utils/axios';
 // ----------------------------------------------------------------------
 
 const initialState = {
-  isLoading: false,
-  error: false,
-  myProfile: null,
-  posts: [],
-  users: [],
-  userList: [],
-  followers: [],
-  friends: [],
-  gallery: [],
-  cards: null,
-  addressBook: [],
-  invoices: [],
-  notifications: null
+  myProfile: {
+    accountType: '',
+    profileType: '',
+    fullName: '',
+    phoneNumber: '',
+    cityName: '',
+    artistName: '',
+    referance: '',
+    subscription: ''
+  },
+  isProfileCompleted: false
 };
 
 const slice = createSlice({
   name: 'user',
   initialState,
   reducers: {
+    loadInitialState(state) {
+      state = initialState;
+    },
+
     // START LOADING
     startLoading(state) {
       state.isLoading = true;
@@ -36,9 +38,10 @@ const slice = createSlice({
       state.error = action.payload;
     },
 
-    createProfileSuccess(state, action) {
+    saveProfile(state, action) {
       state.isLoading = false;
       state.myProfile = action.payload;
+      state.isProfileCompleted = true;
     },
 
     // GET PROFILE
@@ -154,12 +157,43 @@ export function getProfile() {
 
 // ----------------------------------------------------------------------
 
-export function createProfile() {
+export function createNewProfile(data) {
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
-      const response = await axios.get('/api/user/profile');
-      dispatch(slice.actions.getProfileSuccess(response.data.profile));
+      const accessToken = window.localStorage.getItem('accessToken');
+
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          'x-auth-token': accessToken
+        }
+      };
+
+      const response = await axios.post('/api/profile', data, config);
+      dispatch(slice.actions.saveProfile(response.data));
+    } catch (error) {
+      dispatch(slice.actions.hasError(error));
+    }
+  };
+}
+
+// ----------------------------------------------------------------------
+
+export function getUserProfile(email) {
+  return async (dispatch) => {
+    dispatch(slice.actions.startLoading());
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      };
+      const response = await axios.get(`/api/profile/${email}`, config);
+      if (response.data) {
+        return dispatch(slice.actions.saveProfile(response.data));
+      }
+      dispatch(slice.actions.loadInitialState(response.data));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }
