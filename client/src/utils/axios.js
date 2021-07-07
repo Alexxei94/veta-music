@@ -3,7 +3,7 @@ import axios from 'axios';
 // ----------------------------------------------------------------------
 
 const axiosInstance = axios.create({
-  baseURL: process.env.PORT || 'http://localhost:5000'
+  baseURL: window.location.origin
 });
 
 axiosInstance.interceptors.response.use(
