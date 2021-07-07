@@ -141,6 +141,8 @@ function AuthProvider({ children }) {
         user
       }
     });
+    storeDispatch(setUser(user));
+    storeDispatch(getUserProfile(user.email));
   };
 
   const register = async (email, password, name, country) => {
@@ -165,6 +167,8 @@ function AuthProvider({ children }) {
         user
       }
     });
+    storeDispatch(setUser(user));
+    storeDispatch(getUserProfile(user.email));
   };
 
   const logout = async () => {
