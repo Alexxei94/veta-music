@@ -23,10 +23,10 @@ const ICONS = {
   kanban: getIcon('ic_kanban')
 };
 
-const sidebarConfig = (isProfileCompleted) => [
+const sidebarConfig = (isProfileExist) => [
   // GENERAL
   // ----------------------------------------------------------------------
-  isProfileCompleted
+  isProfileExist
     ? {
         subheader: 'general',
         items: [

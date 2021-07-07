@@ -15,9 +15,9 @@ ProfileGuard.propTypes = {
 export default function ProfileGuard({ children }) {
   const { isAuthenticated } = useAuth();
 
-  const isProfileCompleted = useSelector((state) => state.profile.isProfileCompleted);
+  const isProfileExist = useSelector((state) => state.profile.isProfileExist);
 
-  if (isAuthenticated && !isProfileCompleted) {
+  if (isAuthenticated && !isProfileExist) {
     return <Navigate to={PATH_DASHBOARD.user.profile} />;
   }
 

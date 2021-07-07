@@ -46,9 +46,9 @@ const ContentStyle = styled('div')(({ theme }) => ({
 
 export default function Register() {
   const { method } = useAuth();
-  const isProfileCompleted = useSelector((state) => state.profile.isProfileCompleted);
+  const isProfileExist = useSelector((state) => state.profile.isProfileExist);
 
-  if (isProfileCompleted) {
+  if (isProfileExist) {
     return <Navigate to={PATH_DASHBOARD.root} />;
   }
 

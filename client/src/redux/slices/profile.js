@@ -16,7 +16,7 @@ const initialState = {
     referance: '',
     subscription: ''
   },
-  isProfileCompleted: false
+  isProfileExist: false
 };
 
 const slice = createSlice({
@@ -41,7 +41,7 @@ const slice = createSlice({
     saveProfile(state, action) {
       state.isLoading = false;
       state.myProfile = action.payload;
-      state.isProfileCompleted = true;
+      state.isProfileExist = true;
     },
 
     // GET PROFILE

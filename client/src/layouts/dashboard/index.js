@@ -35,16 +35,12 @@ const MainStyle = styled('div')(({ theme }) => ({
 
 export default function DashboardLayout() {
   const [open, setOpen] = useState(false);
-  const isProfileCompleted = useSelector((state) => state.profile.isProfileCompleted);
+  const isProfileExist = useSelector((state) => state.profile.isProfileExist);
 
   return (
     <RootStyle>
       <DashboardNavbar onOpenSidebar={() => setOpen(true)} />
-      <DashboardSidebar
-        isOpenSidebar={open}
-        onCloseSidebar={() => setOpen(false)}
-        isProfileCompleted={isProfileCompleted}
-      />
+      <DashboardSidebar isOpenSidebar={open} onCloseSidebar={() => setOpen(false)} isProfileExist={isProfileExist} />
       <MainStyle>
         <Outlet />
       </MainStyle>
