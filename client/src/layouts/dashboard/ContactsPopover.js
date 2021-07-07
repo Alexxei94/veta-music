@@ -37,9 +37,9 @@ export default function ContactsPopover() {
     }
   }, [isMountedRef]);
 
-  useEffect(() => {
-    getContacts();
-  }, [getContacts]);
+  // useEffect(() => {
+  //   getContacts();
+  // }, [getContacts]);
 
   const handleOpen = () => {
     setOpen(true);

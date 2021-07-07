@@ -3,7 +3,7 @@ import axios from 'axios';
 // ----------------------------------------------------------------------
 
 const axiosInstance = axios.create({
-  baseURL: window.location.origin
+  baseURL: process.env.NODE_ENV === 'production' ? window.location.origin : 'http://localhost:5000'
 });
 
 axiosInstance.interceptors.response.use(
