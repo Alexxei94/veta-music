@@ -106,7 +106,7 @@ let board = {
           id: cardIds.card4,
           attachments: [mockImgFeed(3)],
           comments: [],
-          description: 'We nede to make it aggresive with pricing because it’s in their interest to acquire us',
+          description: 'We need to make it aggresive with pricing because it’s in their interest to acquire us',
           due: null,
           columnId: columnIds.column1,
           assignee: [

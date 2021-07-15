@@ -20,7 +20,8 @@ const ICONS = {
   ecommerce: getIcon('ic_ecommerce'),
   analytics: getIcon('ic_analytics'),
   dashboard: getIcon('ic_dashboard'),
-  kanban: getIcon('ic_kanban')
+  kanban: getIcon('ic_kanban'),
+  album: getIcon('ic_album')
 };
 
 const sidebarConfig = (isProfileExist) => [
@@ -97,7 +98,8 @@ const sidebarConfig = (isProfileExist) => [
       { title: 'mail', path: PATH_DASHBOARD.mail.root, icon: ICONS.mail },
       { title: 'chat', path: PATH_DASHBOARD.chat.root, icon: ICONS.chat },
       { title: 'calendar', path: PATH_DASHBOARD.calendar, icon: ICONS.calendar },
-      { title: 'kanban', path: PATH_DASHBOARD.kanban, icon: ICONS.kanban }
+      { title: 'kanban', path: PATH_DASHBOARD.kanban, icon: ICONS.kanban },
+      { title: 'album', path: PATH_DASHBOARD.album, icon: ICONS.album }
     ]
   }
 ];
